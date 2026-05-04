@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <nav>
     <ul id="logo-container">
         <div id="logo"></div>
@@ -10,9 +14,11 @@
         <li>Equipe</li>
     </ul>
     <ul id="login-container">
-        <li>
-            <a href="login/login.php" class="button"><span>Login</span></a>
-        </li>
+        <?php if (!isset($_SESSION['user'])) { ?>
+            <li>
+                <a href="login/login.php" class="button"><span>Login</span></a>
+            </li>
+        <?php } ?>
         <div id="login-icon"></div>
     </ul>
     <label for="menu-header"><img src="/img/menu-header.png" alt="" /></label>

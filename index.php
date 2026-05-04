@@ -1,3 +1,20 @@
+<?php
+session_start();
+if (isset($_SESSION['user'])) {
+  require_once 'login/verify-user.php';
+  $userRoles = verificarUsuario($_SESSION['user']);
+  if ($userRoles['codTypeRoles'] == 0) {
+    header("Location: userScreen/home-user.php");
+  } else if ($userRoles['codTypeRoles'] == 1) {
+    header('Location: admScreen/home-adm.php');
+  }
+} else {
+  session_destroy();
+}
+
+?>
+
+
 <!doctype html>
 <html lang="pt-br">
 
