@@ -49,7 +49,7 @@ class Auth
             $dados['senha']
         );
 
-        if (ChecaSenha($passwordLogin, $user->getSenha())) {
+        if (password_verify($passwordLogin, $user->getSenha())) {
             return $user;
         } else {
             return false;
@@ -81,8 +81,16 @@ $user = $auth->login($email, $senha);
 if ($user) {
     session_regenerate_id(true);
     $_SESSION['user'] = $user->getEmail();
-
-    header("Location: ../index.html");
+    echo 'teste<br/>';
+    require_once "verify-user.php";
+    echo 'teste<br/>';
+    $userRoles = verificarUsuario($user->getEmail());
+    echo 'teste<br/>';
+    if ($userRoles['codTypeRoles'] == 0) {
+        header("Location: ../userScreen/home-user.php");
+    } else if ($userRoles['codTypeRoles'] == 1) {
+        header('Location: ../admScreen/home-adm.php');
+    }
     exit;
 } else {
     header("Location: login.php?erro=1");

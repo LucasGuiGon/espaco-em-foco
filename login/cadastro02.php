@@ -48,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 require_once '../config.php';
-require_once 'cryp2graph2.php';
 
 session_start();
 
@@ -57,7 +56,7 @@ $nameSign = $_POST['nameSign'];
 $lastNameSign = $_POST['lastNameSign'];
 $passwordSign = $_POST['passwordSign'];
 
-$senha_cripto = FazSenha($emailSign, $passwordSign);
+$senha_cripto = password_hash($passwordSign, PASSWORD_BCRYPT);
 
 $pdo = getDB();
 
@@ -66,7 +65,7 @@ $criou = $criar->cadastro($emailSign, $nameSign, $lastNameSign, $senha_cripto);
 
 if ($criou) {
     $_SESSION['user'] = $emailSign;
-    header("Location: ../index.html");
+    header("Location: ../userScreen/home-user.php");
     exit;
 } else {
     ob_clean();

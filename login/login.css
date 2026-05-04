@@ -309,7 +309,8 @@
     flex-direction: column;
 }
 
-/* Terms Screen Modal */
+/*Tela de Termos*/
+
 #terms-screen {
     display: none;
     position: fixed;
@@ -479,7 +480,6 @@
     box-shadow: none;
     border: none;
 }
-
 /* Comportamento no Mobile/Tablet: Ordem invertida suave */
 @media (max-width: 767px) {
     .sign-up-section.is-login .welcome-panel {
