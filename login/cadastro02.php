@@ -65,7 +65,7 @@ $criou = $criar->cadastro($emailSign, $nameSign, $lastNameSign, $senha_cripto);
 
 if ($criou) {
     $_SESSION['user'] = $emailSign;
-    header("Location: ../userScreen/home-user.php");
+    header("Location: finalizarCadastro/cadastro03.php");
     exit;
 } else {
     ob_clean();

@@ -8,7 +8,7 @@
 /* =========================================
    LAYOUT GERAL (Lado a Lado)
 ========================================= */
-body {
+.home-user-main {
     padding: 0 16px;
 }
 
@@ -51,7 +51,7 @@ body {
 .profile-avatar {
     width: 110px; height: 110px;
     border-radius: 50%;
-    border: 3px solid #f000ff;
+    border: 3px solid #0022ff;
     margin-top: -55px;
     background-color: #e0e0e0;
     overflow: hidden;
