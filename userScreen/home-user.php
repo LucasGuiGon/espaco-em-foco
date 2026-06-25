@@ -38,6 +38,10 @@ try {
   $stmt6->execute(['email' => $_SESSION['user']]);
   $userFollowers = $stmt6->fetchColumn();
 
+  $stmt7 = $pdo->prepare('SELECT fotoPerfil FROM user WHERE email = :email;');
+  $stmt7->execute(['email' => $_SESSION['user']]);
+  $userProfilePhoto = $stmt7->fetch(PDO::FETCH_ASSOC);
+
   $xpNecessario = xpNecessario($userLevel['userLevel']);
 
   $porcentagem = ($userPoints['userPoints'] / $xpNecessario) * 100;
@@ -75,7 +79,7 @@ try {
         <div class="user-profile">
           <div class="profile-avatar">
             <img
-              src="caminho-para-avatar.jpg"
+              src="../<?= $userProfilePhoto['fotoPerfil'] ?>"
               alt="Foto de Perfil"
               class="avatar-img" />
           </div>
