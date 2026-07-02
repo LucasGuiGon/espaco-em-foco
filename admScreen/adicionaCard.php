@@ -19,13 +19,14 @@ if ($userRoles['codTypeRoles'] == 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css" />
     <script src="../scripts/index.js" type="module" defer></script>
-    <script src="../scripts/apiCards.js"></script>
+    <script src="../scripts/apiCardsAdiciona.js" defer></script>
+    <script src="../scripts/adicionaCard.js" type="module" defer></script>
     <title>Document</title>
 </head>
 
 <body>
     <header id="main-header">
-        <?php include __DIR__ . "/navBar.php"; ?>
+        <?php include __DIR__ . "/../navBar.php"; ?>
     </header>
     <form id="cardForm" method="POST" action="adicionaCard2.php" enctype="multipart/form-data">
         <label for="image">Imagem:</label>
