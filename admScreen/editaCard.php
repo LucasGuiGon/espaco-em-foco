@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../config.php';
 
 $pdo = getDB();
 
@@ -34,13 +34,13 @@ if (!$card) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../style.css" />
-    <script src="../../scripts/index.js" type="module" defer></script>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../scripts/index.js" type="module" defer></script>
     <title>Editar Card</title>
 </head>
 <body>
     <header id="main-header">
-        <?php include __DIR__ . "/../../navBar.php"; ?>
+        <?php include __DIR__ . "/../navBar.php"; ?>
     </header>
     <form id="cardForm" method="POST" action="editaCard2.php" enctype="multipart/form-data">
         <label for="image">Imagem:</label>
