@@ -21,7 +21,7 @@ if ($userroles['codTypeRoles'] == 0) {
     <script src="../scripts/index.js" type="module" defer></script>
     <script src="../scripts/apiCardsAdiciona.js" defer></script>
     <script src="../scripts/adicionaCard.js" type="module" defer></script>
-    <title>Document</title>
+    <title>Adicionar Card</title>
 </head>
 
 <body>
