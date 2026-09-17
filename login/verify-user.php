@@ -20,7 +20,15 @@ try {
     $pdo = getDB();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $pdo->prepare('SELECT data_fim, tipo_banimento FROM `banimentos` WHERE email = :email');
+    $stmt = $pdo->prepare(
+        'SELECT data_fim, tipo_banimento
+        FROM `banimentos`
+        WHERE email = :email
+        AND (
+            tipo_banimento = "permanente"
+            OR data_fim > NOW()
+        )'
+    );
     $stmt->execute(['email' => $_SESSION['user']]);
     $userBan = $stmt->fetch();
     if($userBan){
