@@ -106,4 +106,14 @@ termsScreenBtn.addEventListener('click', () => {
     termsScreen.style.display = 'none'
 })
 
+// ---- Lógica do Banimento ----
+const parametros = new URLSearchParams(window.location.search);
+const ban = parametros.get('ban');
+if (ban) {
+    if (ban === 'permanente') {
+        alert("Você está banido permanentemente.");
+    } else {
+        alert(`Você está banido até ${ban}.`);
+    }
+}
 
