@@ -27,6 +27,11 @@
                 <p class="empty-email">
                   Esse campo não pode estar vazio!
                 </p>
+                <?php
+                  if (isset($_GET['erro'])) {
+                    echo "<p style='color:red;'>Email não existe!</p>";
+                  }
+                ?>
               </div>
               <button type="submit" class="button submit-email">
                 Criar Conta
