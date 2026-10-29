@@ -1,4 +1,5 @@
-/* Fundo escuro do modal */
+
+/* Fundo escuro dos modais */
 .modal {
     display: none;
 
@@ -41,9 +42,9 @@
     flex-direction: column;
 }
 
+/* Cabeçalho */
 .modal-header {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
 
@@ -56,6 +57,7 @@
     margin: 0;
 }
 
+/* Botão de fechar */
 .fechar-modal {
     border: none;
     background: none;
@@ -66,41 +68,58 @@
     cursor: pointer;
 }
 
+/* Corpo do modal */
 .modal-body {
     padding: 20px;
-
     overflow-y: auto;
 }
 
+/* Campos de informação */
 .campo {
     margin-bottom: 20px;
 }
 
 .campo strong {
     display: block;
-
     margin-bottom: 5px;
-
     font-size: 14px;
 }
 
 .campo p {
     margin: 0;
+    overflow-wrap: anywhere;
 }
 
+/* Descrição do post */
 .descricao {
     padding: 15px;
 
     background-color: #f5f5f5;
+    color: #222;
 
     border-radius: 8px;
 
     min-height: 80px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
+/* Informações específicas do post */
+.info-post {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-post #modal-desc {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+/* Rodapé */
 .modal-footer {
     display: flex;
-
     justify-content: flex-end;
 
     gap: 10px;
@@ -110,15 +129,14 @@
     border-top: 1px solid #ddd;
 }
 
+/* Botões do rodapé */
 .modal-footer button {
     padding: 10px 18px;
 
     border: none;
-
     border-radius: 6px;
 
     cursor: pointer;
-
     font-weight: bold;
 }
 
@@ -130,4 +148,27 @@
 .btn-resolver {
     background-color: #28a745;
     color: white;
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 600px) {
+    .modal-conteudo {
+        width: 95%;
+        max-width: 95%;
+        max-height: 90vh;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 15px;
+    }
+
+    .modal-footer {
+        flex-wrap: wrap;
+    }
+
+    .modal-footer button {
+        flex: 1;
+    }
 }

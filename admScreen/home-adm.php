@@ -22,6 +22,55 @@ try {
 } catch (Exception $e) {
     $_SESSION['erro'] = $e->getMessage();
 }
+
+try {
+    $pdo = getDB();
+
+    // 1. Buscar posts em análise
+    $sqlBusca = "
+        SELECT *
+        FROM postagens_forum
+        WHERE avaliacao_adm = 'Em Analise'
+    ";
+
+    $stmtBusca = $pdo->prepare($sqlBusca);
+    $stmtBusca->execute();
+
+    $posts = $stmtBusca->fetchAll(PDO::FETCH_ASSOC);
+
+    // 2. Buscar imagens dos posts encontrados
+    if (!empty($posts)) {
+        $ids = array_column($posts, 'id');
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $sqlImgs = "
+            SELECT *
+            FROM imgs_post
+            WHERE id_post IN ($placeholders)
+        ";
+
+        $stmtImgs = $pdo->prepare($sqlImgs);
+        $stmtImgs->execute($ids);
+
+        $imagens = $stmtImgs->fetchAll(PDO::FETCH_ASSOC);
+
+        // 3. Organizar as imagens por ID do post
+        $imgsPorPost = [];
+
+        foreach ($imagens as $img) {
+            $imgsPorPost[$img['id_post']][] = $img;
+        }
+
+        // 4. Adicionar as imagens dentro de cada post
+        foreach ($posts as &$post) {
+            $post['imagens'] = $imgsPorPost[$post['id']] ?? [];
+        }
+
+        unset($post);
+    }
+
+} catch (Exception $e) {
+    $_SESSION['erro'] = $e->getMessage();
+}
 ?>
 
 
@@ -34,6 +83,7 @@ try {
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="styleadm.css" />
     <script src="../scripts/abrirDenuncia.js" type="module" defer></script>
+    <script src="../scripts/abrirPost.js" defer></script>
     <title>Document</title>
 </head>
 
@@ -216,6 +266,94 @@ try {
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="posts">
+        <?php if (empty($posts)): ?>
+            <p>Nenhum post encontrada.</p>
+        <?php else: ?>
+            <?php foreach ($posts as $post): ?>
+                <div class="post">
+                    <h2>Post #<?= htmlspecialchars($post['id']) ?></h2>
+
+                    <p>
+                        <strong>Usuário:</strong>
+                        <?= htmlspecialchars($post['nome_usuario_post']) ?>
+                    </p>
+
+                    <p>
+                        <strong>Título:</strong>
+                        <?= htmlspecialchars($post['titulo_post']) ?>
+                    </p>
+
+                    <p>
+                        <strong>Tópico:</strong>
+                        <?= htmlspecialchars($post['topic_post']) ?>
+                    </p>
+
+                    <p>
+                        <strong>Descrição:</strong>
+                        <?= htmlspecialchars($post['desc_post']) ?>
+                    </p>
+                    <button
+                        type="button"
+                        class="button analisar-post"
+                        data-id="<?= htmlspecialchars($post['id'], ENT_QUOTES, 'UTF-8') ?>"
+                        data-usuario="<?= htmlspecialchars($post['nome_usuario_post'], ENT_QUOTES, 'UTF-8') ?>"
+                        data-topic="<?= htmlspecialchars($post['topic_post'], ENT_QUOTES, 'UTF-8') ?>"
+                        data-titulo="<?= htmlspecialchars($post['titulo_post'], ENT_QUOTES, 'UTF-8') ?>"
+                        data-desc="<?= htmlspecialchars($post['desc_post'], ENT_QUOTES, 'UTF-8') ?>"
+                    >
+                        Analisar
+                    </button>
+                </div>
+                <br>
+            <?php endforeach; ?>
+
+        <?php endif; ?>
+    </div>
+    <div id="modalPost" class="modal">
+        <div class="modal-conteudo">
+            <div class="modal-header">
+                <h2>Analisar post #<span id="modal-id"></span></h2>
+                <button id="fecharModal" class="fechar-modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="info-post">
+                    <div class="campo">
+                        <strong>Usuário</strong>
+                        <p id="modal-post"></p>
+                    </div>
+
+                    <div class="campo">
+                        <strong>Tópico</strong>
+                        <p id="modal-topic"></p>
+                    </div>
+
+                    <div class="campo">
+                        <strong>Título</strong>
+                        <p id="modal-titulo"></p>
+                    </div>
+
+                    <div class="campo">
+                        <strong>Descrição</strong>
+                        <p id="modal-desc"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="recusarPost" class="btn-recusar">
+                    Recusar post
+                </button>
+
+                <button id="resolverPost" class="btn-resolver">
+                    Resolver post
+                </button>
             </div>
         </div>
     </div>
